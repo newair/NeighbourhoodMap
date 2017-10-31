@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Neighbourhood Map</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8">
+
+    <!-- Scripts -->
+    <!-- <script src="lib/jquery-3.2.1.min.js"></script> -->
+
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDH6QHRcFA33MAwI4IZiqo1vJOdgMii0go&libraries=drawing,geometry&callback=initMap"></script> -->
+
+    <link href="css/main.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <!-- This is the control Area where all the bindings are applied -->
+    <div id="control-area">
+        <div class="search-panel" data-bind="visible: openMenu">
+            <!-- <button id="show-map">show map</button>
+                <button id="hide-map">hide map</button> -->
+            <img src="img/close-nav.svg" alt="Close" class="close-nav" data-bind="click: closeSearchMenu">
+
+            <span class="header menu-header-text">Neighbourhood Map</span>
+            <div class="search-input-container">
+                <input type="text" placeholder="Search" class="search-input" data-bind="textInput : searchText">
+            </div>
+            <div class="search-result-container" data-bind="foreach: locations">
+                <div class="search-result" data-bind="click: onSearchResultClick">
+                    <span data-bind="text: name"></span>
+                </div>
+            </div>
+        </div>
+
+        <header class="header" data-bind="visible: !openMenu()">
+            <img src="img/open-nav.png" alt="Open" class="open-nav" data-bind="click: openSearchMenu, visible: !openMenu()">
+            <span class="header-text">Neighbourhood Map</span>
+        </header>
+    </div>
+
+    <div class="content">
+        <div id="map"></div>
+    </div>
+
+    <div id="info-window" style="display:none">
+        <div data-bind="text: locationName"></div>
+        <div data-bind="html: address"></div>
+        <img data-bind="attr: {src: bestPhoto}" />
+    </div>
+
+    <script src="lib/jquery-3.2.1.min.js"></script>
+    <script src="lib/knockout-3.4.2.js" /></script>
+    <script src="js/main.js?v=2" /></script>
+    <script src="js/googleMapHandler.js?v=2" /></script>
+    <script src="js/fourSquarHandler.js?v=2" /></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDH6QHRcFA33MAwI4IZiqo1vJOdgMii0go&libraries=drawing,geometry&callback=googleMapHandler.initMap"></script>
+</body>
+
+</html>
