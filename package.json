@@ -1,0 +1,33 @@
+{
+  "name": "neighbourhoodmap",
+  "version": "1.0.0",
+  "description": "Neighbourhood Map  Amila Ishara (Udacity)",
+  "main": "index.js",
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "jshint": "^2.9.5",
+    "jslint": "^0.11.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-uglify": "^3.1.0",
+    "jshint": "^2.9.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newair/NeighbourhoodMap.git"
+  },
+  "author": "Amila Ishara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/newair/NeighbourhoodMap/issues"
+  },
+  "homepage": "https://github.com/newair/NeighbourhoodMap#readme"
+}
