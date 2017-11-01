@@ -18,6 +18,10 @@ module.exports = function (grunt) {
       }
     },
 
+    jshint: {
+      beforeconcat: ['Gruntfile.js','js/main.js', 'js/googleMapHandler.js', 'js/fourSquarHandler.js']
+    },
+
     copy: {
       main: {
         files: [{
@@ -63,10 +67,11 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-jshint');  
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('default', ['clean','concat', 'copy','connect:server']);
-  grunt.registerTask('prod', ['clean','concat','uglify', 'copy','connect:server']);
+  grunt.registerTask('prod', ['clean','jshint','concat','uglify', 'copy','connect:server']);
   
 };
