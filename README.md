@@ -10,7 +10,7 @@ Locations can be searched in the searchable view.
 * Register with FourSquare API.
 * Replace the key in https://maps.googleapis.com/maps/api with your key from Google Maps API
 * Replace the endPoint, client_id, client_secret, version.
-* Install NodeJS ( in case you need a server).
+* Install NodeJS.
 
 ## Supported Browsers
 * Chrome
@@ -21,10 +21,11 @@ Locations can be searched in the searchable view.
 ## How to Run
 
 * Go to the directory with inedx.html.
-* npm install http-server -g.
-* run the command http-server.
-* Default server will be started on port 8080. Port may differ if you overide the configuration.
-* Accss http://localhost:8080
+* npm install
+* dev mode: grunt
+* prod mode: grunt prod
+* Default server will be started on port 9001. Port may differ if you overide the grunt           configuration.
+* Accss http://localhost:9001
 
 
 ## References
@@ -33,4 +34,5 @@ Locations can be searched in the searchable view.
 * Google Maps API.
 * FourSquare Venue API.
 * KnockoutJS documentation.
+* GruntJS documentation.
 * Assistance from Stack overflow already posted questions.

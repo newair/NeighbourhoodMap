@@ -62,12 +62,14 @@ var ControlAreaViewModel = function () {
 
     // Search menu open
     openSearchMenu = function(){
+        $('.content').css('height','100%');
        self.openMenu(true);
     };
 
     // Search menu close
     closeSearchMenu = function(){
-       self.openMenu(false);
+        $('.content').css('height','90%');
+        self.openMenu(false);
     };
 
     // callback when clicked on list view

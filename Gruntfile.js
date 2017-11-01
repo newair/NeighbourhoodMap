@@ -7,7 +7,6 @@ module.exports = function (grunt) {
     clean: ['dist'],
     concat: {
       options: {
-        // define a string to put between each file in the concatenated output
         separator: ';'
       },
       src_and_lib: {
@@ -71,7 +70,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
+  //dev build
   grunt.registerTask('default', ['clean','concat', 'copy','connect:server']);
+  // prod build
   grunt.registerTask('prod', ['clean','jshint','concat','uglify', 'copy','connect:server']);
   
 };

@@ -81,8 +81,23 @@ body {
     height: 30%;
 }
 
+.foursquare-icon{
+    width: 20px;
+    height:20px;
+}
+
+.location-name{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 1.25em;
+    color: brown;
+}
+
+.address{
+    margin-bottom:5px;
+}
+
 .search-result{
-    
     height: 50px;
     margin-top: 2px;
     cursor: pointer;
@@ -94,7 +109,6 @@ body {
 }
 
 .search-result:hover{
-    
     height: 50px;
     margin-top: 2px;
     background: rgb(193, 220, 255); /* For browsers that do not support gradients */
@@ -105,11 +119,8 @@ body {
 }
 
 
+/* Styles for tab and below scren sizes */
 @media(max-width: 1100px) {
-
-/* .close-nav{
-    display: none;
-} */
 
 .close-nav{
     height: 40px;
@@ -119,7 +130,6 @@ body {
     cursor: pointer;
     position: absolute;
     z-index: 99;
-
 }
 
 .search-panel {
