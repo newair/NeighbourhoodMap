@@ -38,22 +38,11 @@
     <div class="content">
         <div id="map"></div>
     </div>
-
-    <!-- In this area, Info window content will be loaded. And that is rendered inside info window -->
-    <div id="info-window" style="display:none">
-        <a data-bind="attr: {href: detailSource}" target="_blank">
-            <img src="img/foursquare.png" class="foursquare-icon" />
-        </a>
-        <div data-bind="text: locationName" class="location-name"></div>
-        <img data-bind="attr: {src: bestPhoto}" class="best-photo" />
-        <div data-bind="html: address" class="address"></div>
-        <div data-bind="text: phone"></div>
-    </div>
-
+    
     <!-- lib and src files prepared by grunt -->
     <script src="lib.js"></script>
     <script src="src.js" /></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDH6QHRcFA33MAwI4IZiqo1vJOdgMii0go&libraries=drawing,geometry&callback=googleMapHandler.initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDH6QHRcFA33MAwI4IZiqo1vJOdgMii0go&libraries=drawing,geometry&callback=googleMapHandler.initMap" onerror="googleMapHandlerhandleMapError()"></script>
 </body>
 
 </html>

@@ -80,16 +80,24 @@ var FourSquareHandler = function () {
         return validation;
     };
 
+    var formatToHTMLAddress =  function(unformattedAdressArray){
+        var address = '';
+        $.each(unformattedAdressArray, function (index, val) {
+            address = address + '<br>' + val;
+        });
+        return address;
+    };
+
     // This will notify the view model when the detail data is ready.
     var _notifyViewModel = function (data, locationModel) {
         var venue = data.response.venue;
 
-        locationDetailModel.locationName(locationModel.name);
-        locationDetailModel.bestPhoto(venue.bestPhoto.prefix + "height80" + venue.bestPhoto.suffix);
-        locationDetailModel.phone(venue.contact.phone);
-        locationDetailModel.detailSource(venue.canonicalUrl);
-        locationDetailModel.unformattedAdressArray(venue.location.formattedAddress);
-        controlAreaViewModel.onLocationDetailModelUpdate(locationModel);
+        locationDetailModel.locationModel=locationModel;
+        locationDetailModel.bestPhoto=venue.bestPhoto.prefix + "height80" + venue.bestPhoto.suffix;
+        locationDetailModel.phone=venue.contact.phone;
+        locationDetailModel.detailSource=venue.canonicalUrl;
+        locationDetailModel.address=formatToHTMLAddress(venue.location.formattedAddress);
+        controlAreaViewModel.onLocationDetailModelUpdate(locationDetailModel);
     };
 
     // Public API to access FourSquare Handler methods

@@ -12,8 +12,15 @@ var GoogleMapHandler = function () {
         infoWindow.addListener('closeclick',_closeInfoWindow.bind(infoWindow) );        
         bounds = new google.maps.LatLngBounds();
         this.populateDataPoints();
+        this.AddEvenetHandlersToMap();
     };
 
+    //This method will listen events in dom tree
+    var AddEvenetHandlersToMap = function(){
+         google.maps.event.addDomListener(window, 'resize', function() {
+            map.fitBounds(bounds);
+        });
+    };
     // This will populate the data points on the map as markers.
     // Filter is optional to apply. Filter is not available when the map is initialized
     var populateDataPoints = function (filter) {
@@ -49,6 +56,11 @@ var GoogleMapHandler = function () {
     //This will trigger the detailed view and make the marker animated
     var triggerLocationDetailView = function (content, locationModel) {
         if (infoWindow.marker !== locationModel.marker) {
+            if(infoWindow.marker){
+                //if existing marker is available close it
+                infoWindow.marker.setAnimation(null);
+                infoWindow.marker = null;
+            }
             infoWindow.marker = locationModel.marker;
             infoWindow.marker.setAnimation(google.maps.Animation.BOUNCE);
             infoWindow.setContent(content);
@@ -78,13 +90,18 @@ var GoogleMapHandler = function () {
 
     // This is the callback when clicked on the map marker
     var _onClickMapMarker =  function () {
-        fourSquareHandler.getDetails(this);
+        fourSquareHandler.getDetails(this);        
     };
 
     //This is the callback when clicked on close icon detailed view
     var _closeInfoWindow = function () {
-        this.marker.setAnimation(null);
-        this.marker = null;// setting it null to make sure new marker is set next time
+            this.marker.setAnimation(null);
+            this.marker = null;// setting it null to make sure new marker is set next time
+    };
+
+    //Handling the error with Map API
+    var handleMapError = function(){
+            alert('Google Maps Error. Please check configuration for loading google maps');
     };
     
     //Public API of the handler
@@ -93,9 +110,11 @@ var GoogleMapHandler = function () {
         infoWindow: null,
         bounds: null,
         initLocation: initLocation,
+        AddEvenetHandlersToMap: AddEvenetHandlersToMap,
         initMap: initMap,
         populateDataPoints: populateDataPoints,
         triggerLocationDetailView: triggerLocationDetailView,
+        handleMapError: handleMapError,
     };
 };
 

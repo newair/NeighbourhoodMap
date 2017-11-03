@@ -30,24 +30,12 @@ var dataPoints = [
  * LocationDetailModel consists of detailed information which is shown when the
  * detail views are requested
  */
-var LocationDetailModel = function () {
-
-    var self = this;
-
-    self.locationName = ko.observable("");
-    self.bestPhoto = ko.observable("");
-    self.phone = ko.observable("");
-    self.detailSource = ko.observable("");
-    self.unformattedAdressArray = ko.observableArray([]);
-
-    //Address has several lines. Thus it needs to be formatted in order to display
-    self.address = ko.pureComputed(function () {
-        var address = '';
-        $.each(self.unformattedAdressArray(), function (index, val) {
-            address = address + '<br>' + val;
-        });
-        return address;
-    }, self);
+var locationDetailModel = {
+    locationName:'',
+    bestPhoto: '',
+    phone: '',
+    detailSource: '',
+    address: '',
 };
 
 /**
@@ -78,9 +66,16 @@ var ControlAreaViewModel = function () {
     };
 
     // callback when detailed results are retreived from FourSquare API 
-    self.onLocationDetailModelUpdate = function (locationModel) {
+    self.onLocationDetailModelUpdate = function (locationDetailModel) {
         // After getting details from Foursquare API  trigger the detail view with google map handler
-        googleMapHandler.triggerLocationDetailView($('#info-window').html(), locationModel);
+
+      var content= " <a href="+locationDetailModel.detailSource+" target='_blank><img src='img/foursquare.png' class='foursquare-icon' /> </a>"+
+       
+       " <div class='location-name'>"+locationDetailModel.locationModel.name+"</div>"+
+        "<img class='best-photo' src='"+locationDetailModel.bestPhoto+"' />"+
+        "<div class='address'>"+locationDetailModel.address+"</div>"+
+        "<div class='phone'>"+locationDetailModel.phone+"</div>";
+        googleMapHandler.triggerLocationDetailView(content, locationDetailModel.locationModel);
     };
 
     // listen on search text and prepare new array to render and search index to load
@@ -120,10 +115,9 @@ var ControlAreaViewModel = function () {
 };
 
 // Instantiate view models
-var locationDetailModel = new LocationDetailModel();
+//var locationDetailModel = new LocationDetailModel();
 var controlAreaViewModel = new ControlAreaViewModel();
 
 // Apply bindings for view models. Note that bindings are applied for certain
 // parts of the UI.
-ko.applyBindings(locationDetailModel, document.getElementById("info-window"));
 ko.applyBindings(controlAreaViewModel, document.getElementById("control-area"));
