@@ -62,6 +62,7 @@ var ControlAreaViewModel = function () {
 
     // callback when clicked on list view
     onSearchResultClick = function (locationModel) {
+        closeSearchMenu(); // close the search menu other wise UX will not be better
         fourSquareHandler.getDetails(locationModel);
     };
 
@@ -69,7 +70,7 @@ var ControlAreaViewModel = function () {
     self.onLocationDetailModelUpdate = function (locationDetailModel) {
         // After getting details from Foursquare API  trigger the detail view with google map handler
 
-      var content= " <a href="+locationDetailModel.detailSource+" target='_blank><img src='img/foursquare.png' class='foursquare-icon' /> </a>"+
+      var content= " <a href="+locationDetailModel.detailSource+" target='_blank'><img src='img/foursquare.png' class='foursquare-icon' /> </a>"+
        
        " <div class='location-name'>"+locationDetailModel.locationModel.name+"</div>"+
         "<img class='best-photo' src='"+locationDetailModel.bestPhoto+"' />"+

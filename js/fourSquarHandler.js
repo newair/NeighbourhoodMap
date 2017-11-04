@@ -93,10 +93,19 @@ var FourSquareHandler = function () {
         var venue = data.response.venue;
 
         locationDetailModel.locationModel=locationModel;
-        locationDetailModel.bestPhoto=venue.bestPhoto.prefix + "height80" + venue.bestPhoto.suffix;
-        locationDetailModel.phone=venue.contact.phone;
-        locationDetailModel.detailSource=venue.canonicalUrl;
-        locationDetailModel.address=formatToHTMLAddress(venue.location.formattedAddress);
+        if(venue.bestPhoto.prefix && venue.bestPhoto.suffix){
+            locationDetailModel.bestPhoto=venue.bestPhoto.prefix + "height60" + venue.bestPhoto.suffix;
+        }else{
+            locationDetailModel.bestPhoto='img/foursquare.png';            
+        }
+        locationDetailModel.phone=venue.contact.phone || 'No Phone provided';
+        locationDetailModel.detailSource=venue.canonicalUrl || 'https://foursquare.com/';
+
+        if(venue.location && venue.location.formattedAddress && venue.location.formattedAddress.length>0){
+            locationDetailModel.address=formatToHTMLAddress(venue.location.formattedAddress);            
+        }else{
+            locationDetailModel.address=formatToHTMLAddress(['No Address','provided']);                        
+        }
         controlAreaViewModel.onLocationDetailModelUpdate(locationDetailModel);
     };
 

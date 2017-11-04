@@ -9,17 +9,22 @@ var GoogleMapHandler = function () {
     var initMap = function () {
         map = _createNewMap();
         infoWindow = new google.maps.InfoWindow({});
-        infoWindow.addListener('closeclick',_closeInfoWindow.bind(infoWindow) );        
         bounds = new google.maps.LatLngBounds();
         this.populateDataPoints();
-        this.AddEvenetHandlersToMap();
+        this.addEvenetHandlersToMap();
     };
 
     //This method will listen events in dom tree
-    var AddEvenetHandlersToMap = function(){
-         google.maps.event.addDomListener(window, 'resize', function() {
+    var addEvenetHandlersToMap = function () {
+        infoWindow.addListener('closeclick', _closeInfoWindow.bind(infoWindow));        
+        google.maps.event.addDomListener(window, 'resize', function () {
             map.fitBounds(bounds);
         });
+    };
+
+    // This method will add event listeners 
+    var addEventListenersToMarker = function (locationModel) {
+        locationModel.marker.addListener('click', _onClickMapMarker.bind(locationModel));
     };
     // This will populate the data points on the map as markers.
     // Filter is optional to apply. Filter is not available when the map is initialized
@@ -34,7 +39,7 @@ var GoogleMapHandler = function () {
                 // set that marker inside the dataPoints array so that We can reuse
                 // it later to pop up info window
                 locationModel.marker = marker;
-                marker.addListener('click', _onClickMapMarker.bind(locationModel));
+                this.addEventListenersToMarker(locationModel);
             } else {
                 marker = locationModel.marker;
                 //if a filter is applied check whether it is in filter index
@@ -56,12 +61,13 @@ var GoogleMapHandler = function () {
     //This will trigger the detailed view and make the marker animated
     var triggerLocationDetailView = function (content, locationModel) {
         if (infoWindow.marker !== locationModel.marker) {
-            if(infoWindow.marker){
+            if (infoWindow.marker) {
                 //if existing marker is available close it
                 infoWindow.marker.setAnimation(null);
                 infoWindow.marker = null;
-            }
+            }           
             infoWindow.marker = locationModel.marker;
+            _centerMap(locationModel);   // This will center the map to the given location    
             infoWindow.marker.setAnimation(google.maps.Animation.BOUNCE);
             infoWindow.setContent(content);
             infoWindow.open(map, locationModel.marker);
@@ -69,8 +75,8 @@ var GoogleMapHandler = function () {
     };
 
     //This will create a new map
-    var _createNewMap = function(){
-       return  new google.maps.Map($('#map')[0], {
+    var _createNewMap = function () {
+        return new google.maps.Map($('#map')[0], {
             center: initLocation,
             zoom: 8,
             mapTypeControl: false
@@ -78,7 +84,7 @@ var GoogleMapHandler = function () {
     };
 
     // This will return a new instance of marker
-    var _createMarker = function(locationModel){
+    var _createMarker = function (locationModel) {
         return new google.maps.Marker({
             position: locationModel.position,
             draggable: true,
@@ -89,28 +95,38 @@ var GoogleMapHandler = function () {
     };
 
     // This is the callback when clicked on the map marker
-    var _onClickMapMarker =  function () {
-        fourSquareHandler.getDetails(this);        
+    var _onClickMapMarker = function () {
+        fourSquareHandler.getDetails(this);
     };
 
     //This is the callback when clicked on close icon detailed view
     var _closeInfoWindow = function () {
-            this.marker.setAnimation(null);
-            this.marker = null;// setting it null to make sure new marker is set next time
+        this.marker.setAnimation(null);
+        this.marker = null;// setting it null to make sure new marker is set next time
     };
 
     //Handling the error with Map API
-    var handleMapError = function(){
-            alert('Google Maps Error. Please check configuration for loading google maps');
+    var handleMapError = function () {
+        alert('Google Maps Error. Please check configuration for loading google maps');
     };
-    
+
+    var _centerMap =function(locationModel){
+        window.setTimeout(function(){
+            map.setCenter(locationModel.marker.getPosition());
+            map.panTo(locationModel.marker.getPosition());   
+            map.setZoom(16);                
+            
+        }, 500); 
+    };
+
     //Public API of the handler
     return {
         map: null,
         infoWindow: null,
         bounds: null,
         initLocation: initLocation,
-        AddEvenetHandlersToMap: AddEvenetHandlersToMap,
+        addEvenetHandlersToMap: addEvenetHandlersToMap,
+        addEventListenersToMarker: addEventListenersToMarker,
         initMap: initMap,
         populateDataPoints: populateDataPoints,
         triggerLocationDetailView: triggerLocationDetailView,
